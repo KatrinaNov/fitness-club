@@ -10,14 +10,10 @@ const sliderPhoto = () => {
   // добавляем стрелки
   slider.insertAdjacentHTML('beforeend', `
     <div class="slider-arrow prev">
-      <span>
-          <img src="./images/arrow-left.png" alt="arrow-left">
-      </span>
+      <span></span>
     </div>
     <div class="slider-arrow next">
-      <span>
-          <img src="./images/arrow-right.png" alt="arrow-right">
-      </span>
+      <span></span>
     </div>
   `);
 
