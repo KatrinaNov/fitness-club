@@ -3,6 +3,7 @@ import toggleClub from './modules/toggleClub';
 import slider from './modules/slider';
 import sliderPhoto from './modules/sliderPhoto';
 import showBtnUp from './modules/showBtnUp';
+import fixburgerMenu from './modules/fixburgerMenu';
 
 // модальные окна
 popup();
@@ -18,3 +19,6 @@ sliderPhoto();
 
 // кнопка вверх
 showBtnUp();
+
+// бургер меню
+fixburgerMenu();
