@@ -38,9 +38,8 @@ const popup = () => {
   });
   gift.addEventListener('click', e => {
     const target = e.target;
-    if (target.classList.contains('close_icon') || !target.closest('.form-content')) {
+    if (target.classList.contains('close_icon') || !target.closest('.form-content') || target.classList.contains('close-btn')) {
       gift.style.display = 'none';
-      fixedGift.style.display = 'block';
     }
   });
 };
