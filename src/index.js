@@ -4,6 +4,7 @@ import slider from './modules/slider';
 import sliderPhoto from './modules/sliderPhoto';
 import showBtnUp from './modules/showBtnUp';
 import fixburgerMenu from './modules/fixburgerMenu';
+import toggleBurgerMenu from './modules/toggleBurgerMenu';
 
 // модальные окна
 popup();
@@ -20,5 +21,8 @@ sliderPhoto();
 // кнопка вверх
 showBtnUp();
 
-// бургер меню
+// зафиксировали бургер меню при скролле
 fixburgerMenu();
+
+// открытие и закрытие бургер меню
+toggleBurgerMenu();
