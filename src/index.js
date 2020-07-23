@@ -5,6 +5,7 @@ import sliderPhoto from './modules/sliderPhoto';
 import showBtnUp from './modules/showBtnUp';
 import fixburgerMenu from './modules/fixburgerMenu';
 import toggleBurgerMenu from './modules/toggleBurgerMenu';
+import SliderCarousel from './modules/SliderCarousel';
 
 // модальные окна
 popup();
@@ -26,3 +27,31 @@ fixburgerMenu();
 
 // открытие и закрытие бургер меню
 toggleBurgerMenu();
+
+// слайдер карусель с услугами
+const options = {
+  main: '.services-slider-wrapper',
+  wrap: '.services-slider',
+  prev: '.services-slider__prev',
+  next: '.services-slider__next',
+  slidesToShow: 5,
+  responsive: [{
+    breakpoint: 1200,
+    slidesToShow: 4,
+  },
+  {
+    breakpoint: 1024,
+    slidesToShow: 3,
+  },
+  {
+    breakpoint: 768,
+    slidesToShow: 2,
+  },
+  {
+    breakpoint: 576,
+    slidesToShow: 1,
+  }
+  ]
+};
+const carousel = new SliderCarousel(options);
+carousel.init();

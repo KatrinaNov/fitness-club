@@ -8,7 +8,6 @@ const toggleBurgerMenu = () => {
 
   popupMenu.addEventListener('click', e => {
     const target = e.target;
-    console.log(target);
     if (target.matches('.scroll a') || target.matches('.close-menu-btn img')) {
       popupMenu.style.display = 'none';
     }

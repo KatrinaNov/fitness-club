@@ -1540,19 +1540,15 @@ nav.popup-menu .close-menu-btn img {
   padding: 5px 5px 5px 18px;
   margin-right: 5px
 }
-
 .services-slider {
   display: flex;
-  margin: 0 auto;
-  padding-left: 15px;
-  padding-right: 15px
+  align-items: flex-start;
+  justify-content: space-between;
+  transition: transform 0.5s;
+  will-change: transform;
 }
-
 .services-slider .slide {
-  text-align: center;
-  margin-right: 6px;
-  margin-left: 6px;
-  width: 210px
+  text-align: center;  
 }
 
 .services-slider .slide img {
@@ -1576,33 +1572,33 @@ nav.popup-menu .close-menu-btn img {
   max-width: 200px;
   margin: 0 auto
 }
-
-.services-slider .slider-arrow {
+.services-slider-wrapper {
+  position: relative;
+  overflow: hidden; 
+}
+.services-slider-wrapper .slider-arrow {
   position: absolute;
   top: 75px;
   margin-top: -18px;
   z-index: 100;
-  cursor: pointer
-}
-
-.services-slider .slider-arrow span {
+  cursor: pointer;
   display: block;
   width: 36px;
   height: 37px;
-  background-color: #f4c71b;
   border-radius: 50%;
   text-align: center;
   padding-top: 11px
 }
 
-.services-slider .slider-arrow.prev {
+.services-slider-wrapper .slider-arrow.prev {
+  display: none;
   left: 2px;
-  background: url('../images/arrow-left.png') no-repeat center
+  background: #f4c71b url('../images/arrow-left.png') no-repeat center;
 }
 
-.services-slider .slider-arrow.next {
+.services-slider-wrapper .slider-arrow.next {
   right: 2px;
-  background: url('../images/arrow-right.png') no-repeat center
+  background: #f4c71b url('../images/arrow-right.png') no-repeat center
 
 }
 
@@ -1634,10 +1630,7 @@ nav.popup-menu .close-menu-btn img {
   top: 50%;
   margin-top: -18px;
   z-index: 100;
-  cursor: pointer
-}
-
-#gallery .gallery-slider .slider-arrow span {
+  cursor: pointer;
   display: block;
   width: 36px;
   height: 37px;
@@ -1648,18 +1641,15 @@ nav.popup-menu .close-menu-btn img {
 
 #gallery .gallery-slider .slider-arrow.prev {
   left: 0;
-}
-#gallery .gallery-slider .slider-arrow.prev span{
   background: #f4c71b url('../images/arrow-left.png') no-repeat center;
 }
 
+
 #gallery .gallery-slider .slider-arrow.next {
   right: 0;
-}
-#gallery .gallery-slider .slider-arrow.next span {
   background: #f4c71b url('../images/arrow-right.png') no-repeat center;
-
 }
+
 
 #gallery .gallery-slider .slider-dots {
   left: 50%;

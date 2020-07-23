@@ -9,12 +9,8 @@ const sliderPhoto = () => {
 
   // добавляем стрелки
   slider.insertAdjacentHTML('beforeend', `
-    <div class="slider-arrow prev">
-      <span></span>
-    </div>
-    <div class="slider-arrow next">
-      <span></span>
-    </div>
+    <div class="slider-arrow prev"></div>
+    <div class="slider-arrow next"></div>
   `);
 
   let currentSlide = 0, // номер слайда
@@ -28,11 +24,11 @@ const sliderPhoto = () => {
   };
   addDots();
   const dot = document.querySelectorAll('.slider-dots li');
-
+  // переключение на предыдущий слайд
   const prevSlide = (elem, index, strClass) => {
     elem[index].classList.remove(strClass);
   };
-
+  // переключение на следующий слайд
   const nextSlide = (elem, index, strClass) => {
     elem[index].classList.add(strClass);
   };
@@ -59,14 +55,14 @@ const sliderPhoto = () => {
   slider.addEventListener('click', event => {
     event.preventDefault();
     const target = event.target;
-    if (!target.matches('.slider-arrow, .slider-arrow span, .slider-dots, .slider-dots li')) {
+    if (!target.matches('.slider-arrow, .slider-dots, .slider-dots li')) {
       return;
     }
     prevSlide(slide, currentSlide, 'active');
     prevSlide(dot, currentSlide, 'slick-active');
-    if (target.closest('div.next')) {
+    if (target.matches('.next')) {
       currentSlide++;
-    } else if (target.closest('div.prev')) {
+    } else if (target.matches('.prev')) {
       currentSlide--;
     } else if (target.matches('.slider-dots li')) {
       dot.forEach((item, index) => {
