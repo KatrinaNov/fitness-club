@@ -6,9 +6,13 @@ import showBtnUp from './modules/showBtnUp';
 import fixburgerMenu from './modules/fixburgerMenu';
 import toggleBurgerMenu from './modules/toggleBurgerMenu';
 import SliderCarousel from './modules/SliderCarousel';
+import takeGift from './modules/takeGift';
 
 // модальные окна
 popup();
+
+// подарок
+takeGift();
 
 // выбрать клуб
 toggleClub();
