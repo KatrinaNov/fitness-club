@@ -7,6 +7,7 @@ import fixburgerMenu from './modules/fixburgerMenu';
 import toggleBurgerMenu from './modules/toggleBurgerMenu';
 import SliderCarousel from './modules/SliderCarousel';
 import takeGift from './modules/takeGift';
+import calculate from './modules/calculate';
 
 // модальные окна
 popup();
@@ -59,3 +60,6 @@ const options = {
 };
 const carousel = new SliderCarousel(options);
 carousel.init();
+
+// калькулятор
+calculate();
