@@ -5,14 +5,16 @@ const sendForm = () => {
     successMessage = 'Ваша заявка отправлена. <br> Мы свяжемся с вами в ближайшее время.';
 
   const forms = document.querySelectorAll('form'),
-    thanks = document.getElementById('thanks');
-    // answerContent = answerPopup.querySelector('.answer-content'),
-    // loader = answerPopup.querySelector('.loader'),
-    // popup = document.querySelector('.popup');
-    // модальное окно с благодарностью
+    thanks = document.getElementById('thanks'),
+    loader = document.querySelector('.loader');
+  // модальное окно с благодарностью
   const answerHandler = (form, message) => {
+    // закрыть модальное окно с формой, если оно есть
+    if (form.closest('.popup')) {
+      form.closest('.popup').style.display = 'none';
+    }
     thanks.addEventListener('click', e => {
-      if (e.target.classList.contains('close_icon')) {
+      if (e.target.classList.contains('close_icon') || e.target.classList.contains('close-btn')) {
         thanks.style.display = 'none';
       } else {
         const target = e.target.closest('.form-content');
@@ -21,38 +23,59 @@ const sendForm = () => {
         }
       }
     });
-
-    //   // скрываем попап, если он есть
-    //   popup.style.opacity = 0;
-    //   popup.style.visibility = 'hidden';
-    //   // убираем прелоадер, появляется модалка с текстом
-    //   loader.style.display = 'none';
     thanks.style.display = 'block';
+    // убираем прелоадер, появляется модалка с текстом
+    loader.style.display = 'none';
+    thanks.querySelector('.form-wrapper').style.display = 'block';
     thanks.querySelector('p').innerHTML = message;
-    //   // очищаем форму
+    // очищаем форму
     form.reset();
   };
 
-  const postData = body => fetch('./server.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
-  // проверка телефона
-  const checkPhone = item => {
-    const patternPhone = /^\+?[78]\s?([-()]*\s?\d){10}$/;
-    return patternPhone.test(item);
+  // создание предупреждающего сообщения об ошибке
+  const createError = (block, text) => {
+    const errorMessage = block.querySelector('.error');
+    if (!errorMessage) {
+      const errorMessage = document.createElement('div');
+      errorMessage.textContent = text;
+      errorMessage.classList.add('error');
+      block.append(errorMessage);
+    } else {
+      errorMessage.style.display = 'block';
+    }
   };
+  // убрать ошибку
+  const deleteError = block => {
+    const errorMessage = block.querySelector('.error');
+    if (errorMessage) {
+      errorMessage.style.display = 'none';
+    }
+  };
+  // проверка чекбокса
+  const checkCheckbox = block => {
+    if (!block.querySelector('input:checked')) {
+      createError(block, 'Нужно ваше согласие');
+      return false;
+    } else {
+      deleteError(block);
+      return true;
+    }
+  };
+
   // проверка текстовых инпутов, можно вводить только русские буквы и пробелы
-  const chechInput = () => {
+  const validate = () => {
     document.body.addEventListener('input', e => {
       const target = e.target;
       // в текстовые инпуты вводим только русские буквы
       if (target.name === 'name') {
         target.value = target.value.replace(/[^а-яё\s]+/i, '');
       }
+
+      // проверка телефона
+      const checkPhone = item => {
+        const patternPhone = /^\+?[78]\s?([-()]*\s?\d){10}$/;
+        return patternPhone.test(item);
+      };
       // проверка номера телефона
       if (target.type === 'tel') {
         if (!checkPhone(target.value)) {
@@ -62,42 +85,41 @@ const sendForm = () => {
         target.style.border = "";
       }
     });
+
+    const personalData = document.querySelectorAll('.personal-data');
+    personalData.forEach(item => {
+      item.addEventListener('change', () => {
+        checkCheckbox(item);
+      });
+    });
   };
-  chechInput();
 
-  // const createError = (block, text) => {
-  //   const errorMessage = document.createElement('div');
-  //   errorMessage.textContent = text;
-  //   errorMessage.classList.add('error');
-  //   block.append(errorMessage);
+  const postData = body => fetch('./server.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
 
-  // };
+  validate();
 
   const formListener = form => {
-    // const personalData = form.querySelector('.personal-data');
-
-    // form.addEventListener('change', event => {
-    //   const target = event.target;
-    //   if (target.closest('.personal-data')) {
-    //     if (target.checked) {
-    //       personalData.querySelector('.error').style.display = 'none';
-    //     } else {
-    //       createError(personalData, 'Нужно ваше согласие');
-    //       return;
-    //     }
-    //   }
-    // });
     form.addEventListener('submit', event => {
       event.preventDefault();
-      // if (!personalData.querySelector('input').checked) {
-      //   createError(personalData, 'Нужно ваше согласие');
-      //   return;
-      // }
-
+      // проверка чекбоксов
+      const personalData = form.querySelector('.personal-data');
+      if (personalData) {
+        if (!checkCheckbox(personalData)) return;
+      }
+      if (form.closest('.popup')) {
+        form.closest('.popup').style.display = 'none';
+      }
       // запускается прелоадер
-      // answerPopup.classList.add('active');
-      // loader.style.display = 'flex';
-      // answerContent.style.display = 'none';
+      thanks.style.display = 'block';
+      loader.style.display = 'flex';
+      thanks.querySelector('.form-wrapper').style.display = 'none';
+
       // создаем объект с данными формы
       const formData = new FormData(form);
       const body = {};
@@ -110,7 +132,6 @@ const sendForm = () => {
             throw new Error('status network not 200');
           }
           answerHandler(form, successMessage);
-          console.log('send');
         })
         .catch(error => {
           answerHandler(form, errorMessage);
@@ -118,7 +139,7 @@ const sendForm = () => {
         });
     });
   };
-    // отправка для трех форм
+  // отправка  форм
   forms.forEach(form => {
     formListener(form);
   });
