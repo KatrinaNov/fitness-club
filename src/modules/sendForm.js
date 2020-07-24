@@ -2,26 +2,26 @@ const sendForm = () => {
 
 
   const errorMessage = 'Что-то пошло не так...',
-    successMessage = 'Спасибо за заявку! Мы скоро с вами свяжемся!';
+    successMessage = 'Ваша заявка отправлена. <br> Мы свяжемся с вами в ближайшее время.';
 
   const form1 = document.getElementById('form1'),
     form2 = document.getElementById('form2'),
     form3 = document.getElementById('card_order'),
     form4 = document.getElementById('footer_form'),
     form5 = document.getElementById('banner-form'),
-    answerPopup = document.getElementById('thanks');
+    thanks = document.getElementById('thanks');
     // answerContent = answerPopup.querySelector('.answer-content'),
     // loader = answerPopup.querySelector('.loader'),
     // popup = document.querySelector('.popup');
     // модальное окно с благодарностью
   const answerHandler = (form, message) => {
-    answerPopup.addEventListener('click', e => {
+    thanks.addEventListener('click', e => {
       if (e.target.classList.contains('close_icon')) {
-        answerPopup.style.display = 'none';
+        thanks.style.display = 'none';
       } else {
         const target = e.target.closest('.form-content');
         if (!target) {
-          answerPopup.style.display = 'none';
+          thanks.style.display = 'none';
         }
       }
     });
@@ -31,8 +31,8 @@ const sendForm = () => {
     //   popup.style.visibility = 'hidden';
     //   // убираем прелоадер, появляется модалка с текстом
     //   loader.style.display = 'none';
-    answerPopup.style.display = 'block';
-    answerPopup.querySelector('p').textContent = message;
+    thanks.style.display = 'block';
+    thanks.querySelector('p').innerHTML = message;
     //   // очищаем форму
     form.reset();
   };
@@ -44,33 +44,60 @@ const sendForm = () => {
     },
     body: JSON.stringify(body)
   });
-
-  // проверка текстовых инпутов, можно вводить только русские буквы и пробелы
-  const chechInput = () => {
-    document.body.addEventListener('input', e => {
-      const target = e.target;
-      if (target.classList.contains('form-name') ||
-            target.classList.contains('mess')) {
-        target.value = target.value.replace(/[^а-яё\s]+/i, '');
-      }
-    });
-  };
-  chechInput();
   // проверка телефона
   const checkPhone = item => {
     const patternPhone = /^\+?[78]\s?([-()]*\s?\d){10}$/;
     return patternPhone.test(item);
   };
+  // проверка текстовых инпутов, можно вводить только русские буквы и пробелы
+  const chechInput = () => {
+    document.body.addEventListener('input', e => {
+      const target = e.target;
+      // в текстовые инпуты вводим только русские буквы
+      if (target.name === 'name') {
+        target.value = target.value.replace(/[^а-яё\s]+/i, '');
+      }
+      // проверка номера телефона
+      if (target.type === 'tel') {
+        if (!checkPhone(target.value)) {
+          target.style.border = "2px solid red";
+          return;
+        }
+        target.style.border = "";
+      }
+    });
+  };
+  chechInput();
+
+  const createError = (block, text) => {
+    const errorMessage = document.createElement('div');
+    errorMessage.textContent = text;
+    errorMessage.classList.add('error');
+    block.append(errorMessage);
+
+  };
 
   const formListener = form => {
+    const personalData = form.querySelector('.personal-data');
+
+    form.addEventListener('change', event => {
+      const target = event.target;
+      if (target.closest('.personal-data')) {
+        if (target.checked) {
+          personalData.querySelector('.error').style.display = 'none';
+        } else {
+          createError(personalData, 'Нужно ваше согласие');
+          return;
+        }
+      }
+    });
     form.addEventListener('submit', event => {
       event.preventDefault();
-      const phone = event.target.querySelector('[type=tel]');
-      if (!checkPhone(phone.value)) {
-        phone.style.border = "1px solid red";
+      if (!personalData.querySelector('input').checked) {
+        createError(personalData, 'Нужно ваше согласие');
         return;
       }
-      phone.style.border = "";
+
       // запускается прелоадер
       // answerPopup.classList.add('active');
       // loader.style.display = 'flex';

@@ -20,16 +20,7 @@ const calculate = () => {
   if (cardOrder) {
     const priceTotal = document.getElementById('price-total');
 
-    const findCheckedElem = name => {
-      const elems = cardOrder.querySelectorAll(`[name=${name}]`);
-      let currentElem;
-      elems.forEach(item => {
-        if (item.checked) {
-          currentElem = item.value;
-        }
-      });
-      return currentElem;
-    };
+    const findCheckedElem = name => cardOrder.querySelector(`input[name=${name}]:checked`).value;
 
     priceTotal.textContent = price[currentClub][currentMonth];
 
@@ -37,7 +28,7 @@ const calculate = () => {
       currentClub = findCheckedElem('club-name');
       currentMonth = findCheckedElem('card-type');
       if (cardOrder.querySelector('.promo').value === 'ТЕЛО2020') {
-        priceTotal.textContent = Math.floor(price[currentClub][currentMonth] * 0.3);
+        priceTotal.textContent = Math.floor(price[currentClub][currentMonth] * 0.7);
       } else {
         priceTotal.textContent = price[currentClub][currentMonth];
       }

@@ -8,6 +8,7 @@ import toggleBurgerMenu from './modules/toggleBurgerMenu';
 import SliderCarousel from './modules/SliderCarousel';
 import takeGift from './modules/takeGift';
 import calculate from './modules/calculate';
+import maskPhone from './modules/maskPhone';
 import sendForm from './modules/sendForm';
 
 // модальные окна
@@ -64,6 +65,9 @@ carousel.init();
 
 // калькулятор
 calculate();
+
+// маска телефона
+maskPhone('[type=tel]');
 
 // отправка форм
 sendForm();
