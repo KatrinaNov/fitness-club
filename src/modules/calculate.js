@@ -1,5 +1,6 @@
 const calculate = () => {
   const cardOrder = document.getElementById('card_order');
+  const priceTotal = document.getElementById('price-total');
   let currentMonth = "1";
   let currentClub = 'mozaika';
   const price = {
@@ -17,8 +18,7 @@ const calculate = () => {
     }
   };
 
-  if (cardOrder) {
-    const priceTotal = document.getElementById('price-total');
+  if (cardOrder && priceTotal) {
 
     const findCheckedElem = name => cardOrder.querySelector(`input[name=${name}]:checked`).value;
 

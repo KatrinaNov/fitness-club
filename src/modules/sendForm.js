@@ -4,11 +4,7 @@ const sendForm = () => {
   const errorMessage = 'Что-то пошло не так...',
     successMessage = 'Ваша заявка отправлена. <br> Мы свяжемся с вами в ближайшее время.';
 
-  const form1 = document.getElementById('form1'),
-    form2 = document.getElementById('form2'),
-    form3 = document.getElementById('card_order'),
-    form4 = document.getElementById('footer_form'),
-    form5 = document.getElementById('banner-form'),
+  const forms = document.querySelectorAll('form'),
     thanks = document.getElementById('thanks');
     // answerContent = answerPopup.querySelector('.answer-content'),
     // loader = answerPopup.querySelector('.loader'),
@@ -69,34 +65,34 @@ const sendForm = () => {
   };
   chechInput();
 
-  const createError = (block, text) => {
-    const errorMessage = document.createElement('div');
-    errorMessage.textContent = text;
-    errorMessage.classList.add('error');
-    block.append(errorMessage);
+  // const createError = (block, text) => {
+  //   const errorMessage = document.createElement('div');
+  //   errorMessage.textContent = text;
+  //   errorMessage.classList.add('error');
+  //   block.append(errorMessage);
 
-  };
+  // };
 
   const formListener = form => {
-    const personalData = form.querySelector('.personal-data');
+    // const personalData = form.querySelector('.personal-data');
 
-    form.addEventListener('change', event => {
-      const target = event.target;
-      if (target.closest('.personal-data')) {
-        if (target.checked) {
-          personalData.querySelector('.error').style.display = 'none';
-        } else {
-          createError(personalData, 'Нужно ваше согласие');
-          return;
-        }
-      }
-    });
+    // form.addEventListener('change', event => {
+    //   const target = event.target;
+    //   if (target.closest('.personal-data')) {
+    //     if (target.checked) {
+    //       personalData.querySelector('.error').style.display = 'none';
+    //     } else {
+    //       createError(personalData, 'Нужно ваше согласие');
+    //       return;
+    //     }
+    //   }
+    // });
     form.addEventListener('submit', event => {
       event.preventDefault();
-      if (!personalData.querySelector('input').checked) {
-        createError(personalData, 'Нужно ваше согласие');
-        return;
-      }
+      // if (!personalData.querySelector('input').checked) {
+      //   createError(personalData, 'Нужно ваше согласие');
+      //   return;
+      // }
 
       // запускается прелоадер
       // answerPopup.classList.add('active');
@@ -123,12 +119,9 @@ const sendForm = () => {
     });
   };
     // отправка для трех форм
-  formListener(form1);
-  formListener(form2);
-  formListener(form3);
-  formListener(form4);
-  formListener(form5);
-
+  forms.forEach(form => {
+    formListener(form);
+  });
 
 };
 
