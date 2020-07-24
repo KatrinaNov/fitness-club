@@ -62,7 +62,6 @@ const sendForm = () => {
     }
   };
 
-  // проверка текстовых инпутов, можно вводить только русские буквы и пробелы
   const validate = () => {
     document.body.addEventListener('input', e => {
       const target = e.target;
@@ -85,7 +84,7 @@ const sendForm = () => {
         target.style.border = "";
       }
     });
-
+    // проверка чекбоксов
     const personalData = document.querySelectorAll('.personal-data');
     personalData.forEach(item => {
       item.addEventListener('change', () => {
