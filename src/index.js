@@ -8,6 +8,7 @@ import toggleBurgerMenu from './modules/toggleBurgerMenu';
 import SliderCarousel from './modules/SliderCarousel';
 import takeGift from './modules/takeGift';
 import calculate from './modules/calculate';
+import sendForm from './modules/sendForm';
 
 // модальные окна
 popup();
@@ -63,3 +64,6 @@ carousel.init();
 
 // калькулятор
 calculate();
+
+// отправка форм
+sendForm();

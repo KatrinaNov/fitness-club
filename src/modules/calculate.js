@@ -33,7 +33,7 @@ const calculate = () => {
 
     priceTotal.textContent = price[currentClub][currentMonth];
 
-    cardOrder.addEventListener('change', () => {
+    cardOrder.addEventListener('input', () => {
       currentClub = findCheckedElem('club-name');
       currentMonth = findCheckedElem('card-type');
       if (cardOrder.querySelector('.promo').value === 'ТЕЛО2020') {
@@ -42,14 +42,6 @@ const calculate = () => {
         priceTotal.textContent = price[currentClub][currentMonth];
       }
     });
-
-    // промокод
-
-
-
-
-
-
   }
 };
 
